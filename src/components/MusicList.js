@@ -1,8 +1,7 @@
-import React, { useState } from 'react'
+function MusicList({children, ...props}) {
 
-function MusicList(homeDir) {
     return (
-        <h1>MusicList</h1>
+        <h1 {...props}>{children}</h1>
     );
 }
 
