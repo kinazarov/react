@@ -11,8 +11,9 @@ function App() {
         {id: 3, title: 'CSS', content:'it is not a proglang'}
     ];
 
-    const [postTitle, setPostTitle] = useState('')
-    const [postContent, setPostContent] = useState('')
+    const emptyPost = {title: '', content: ''};
+
+    const [post, setPost] = useState(emptyPost)
     const [posts, setPosts] = useState(testPosts)
 
 
@@ -21,19 +22,27 @@ function App() {
 
         const newPost = {
             id: Date.now(),
-            'title': postTitle,
-            'content': postContent
+            'title': post.title,
+            'content': post.content
         }
 
         setPosts([...posts, newPost])
-
+        setPost(emptyPost)
     }
 
     return (
         <div className="App">
             <form>
-                <MyInput value={postTitle} onChange={e => setPostTitle(e.target.value)} type='text' placeholder='Название поста'></MyInput>
-                <MyInput value={postContent} onChange={e => setPostContent(e.target.value)} type='text' placeholder='Содержание поста'></MyInput>
+                <MyInput
+                    value={post.title}
+                    onChange={e => setPost({...post, 'title': e.target.value})}
+                    type='text' placeholder='Название поста'
+                />
+                <MyInput
+                    value={post.content}
+                    onChange={e => setPost({...post, 'content': e.target.value})}
+                    type='text' placeholder='Содержание поста'
+                />
                 <MyButton onClick={addNewPost}>Запостить</MyButton>
             </form>
             <PostList posts={posts} key={1} title="Список постов 1"/>
