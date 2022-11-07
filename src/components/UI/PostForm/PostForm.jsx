@@ -1,20 +1,11 @@
 import React from 'react'
-import MyButton from './MyButton/MyButton';
-import MyInput from './MyInput/MyInput';
+import MyButton from '../MyButton/MyButton';
+import MyInput from '../MyInput/MyInput';
+import { useState } from 'react';
 
-function PostForm({posts, title}) {
-    const testPosts = [
-        {id: 1, title: 'JS', content:'it is a proglang'},
-        {id: 2, title: 'Python', content:'it is a proglang too'},
-        {id: 3, title: 'CSS', content:'it is not a proglang'}
-    ];
-
+function PostForm({create}) {
     const emptyPost = {title: '', content: ''};
-
-
-    const [post, setPost] = useState(emptyPost)
-    const [posts, setPosts] = useState(testPosts)
-
+    const [post, setFormState] = useState(emptyPost)
 
     const addNewPost = (e) => {
         e.preventDefault();
@@ -24,21 +15,21 @@ function PostForm({posts, title}) {
             'title': post.title,
             'content': post.content
         }
+        create(newPost)
+        setFormState(emptyPost)
 
-        setPosts([...posts, newPost])
-        setPost(emptyPost)
     }
 
     return (
         <form>
             <MyInput
                 value={post.title}
-                onChange={e => setPost({...post, 'title': e.target.value})}
+                onChange={e => setFormState({...post, 'title': e.target.value})}
                 type='text' placeholder='Название поста'
             />
             <MyInput
                 value={post.content}
-                onChange={e => setPost({...post, 'content': e.target.value})}
+                onChange={e => setFormState({...post, 'content': e.target.value})}
                 type='text' placeholder='Содержание поста'
             />
             <MyButton onClick={addNewPost}>Запостить</MyButton>

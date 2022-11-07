@@ -1,4 +1,5 @@
 import Counter from './Counter'
+import MyButton from '../components/UI/MyButton/MyButton'
 
 function Post(props) {
     return (
@@ -9,7 +10,7 @@ function Post(props) {
             </p>
             <div className='postButtons'>
                 <Counter/>
-                <button>Удалить</button>
+                <MyButton>Удалить</MyButton>
             </div>
         </div>
     );
