@@ -10,7 +10,7 @@ function Post(props) {
             </p>
             <div className='postButtons'>
                 <Counter/>
-                <MyButton>Удалить</MyButton>
+                <MyButton onClick={() => props.remove(props.post)}>Удалить</MyButton>
             </div>
         </div>
     );
