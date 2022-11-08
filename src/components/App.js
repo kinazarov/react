@@ -24,9 +24,17 @@ function App() {
     return (
         <div className="App">
             <PostForm create={addNewPost}/>
+            <div>
+                <hr style={{margin: '15px 0'}}/>
+                <select>
+                    <option value="byTitle">По названию</option>
+                    <option value="byContent">По описанию</option>
+                </select>
+            </div>
+
             {
                 posts.length === 0 ?
-                 <p><br/><br/><b>Посты не найдены</b></p>
+                 <h1 style={{textAlign: 'center'}}>Посты не найдены</h1>
                 : <PostList remove={removePost} posts={posts} key={1} title="Список постов 1"/>
             }
             <MusicList/>
