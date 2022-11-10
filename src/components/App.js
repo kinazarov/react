@@ -2,36 +2,67 @@ import { useState } from 'react';
 import MusicList from './MusicList'
 import PostList from '../components/UI/PostList/PostList'
 import PostForm from '../components/UI/PostForm/PostForm';
+import MySelect from '../components/UI/MySelect/MySelect';
 
 function App() {
     const testPosts = [
-        {id: 1, title: 'JS', content:'it is a proglang'},
-        {id: 2, title: 'Python', content:'it is a proglang too'},
-        {id: 3, title: 'CSS', content:'it is not a proglang'}
+        {id: 1, title: 'JS', content:'1 it is a proglang'},
+        {id: 2, title: 'Python', content:'2 it is a proglang too'},
+        {id: 3, title: 'CSS', content:'3 it is not a proglang'}
     ];
 
     const [posts, setPosts] = useState(testPosts)
+    const [selectedSort, setSelectedSort] = useState('')
 
 
     const addNewPost = (newPost) => {
-        setPosts([...posts, newPost])
+        let appended = [...posts, newPost];
+        let newPosts = sortPosts(selectedSort, appended);
+        setPosts(newPosts)
     }
 
     const removePost = (post) => {
         setPosts(posts.filter(p => p.id !== post.id))
     }
 
+    const sortPosts = (sortType, newPosts) => {
+        setSelectedSort(sortType)
+        let sortFunc = null;
+
+        switch(sortType){
+            case 'byTitle':
+                sortFunc = (a, b) => a.title > b.title
+                break;
+            case 'byContent':
+                sortFunc = (a, b) => a.content > b.content
+                break
+            default:
+                sortFunc = () => false
+        }
+
+        if(newPosts){
+            let s = newPosts.sort(sortFunc)
+            return s
+        } else {
+            setPosts(posts.sort(sortFunc))
+        }
+    }
+
     return (
         <div className="App">
             <PostForm create={addNewPost}/>
-            <div>
-                <hr style={{margin: '15px 0'}}/>
-                <select>
-                    <option value="byTitle">По названию</option>
-                    <option value="byContent">По описанию</option>
-                </select>
-            </div>
-
+            <MySelect
+                splitter={true}
+                defaultValue="Сортировка по"
+                value={selectedSort}
+                onChange={sortPosts}
+                options={
+                    [
+                        {value: 'byTitle', title: 'По заголовку'},
+                        {value: 'byContent', title: 'По содержимому'}
+                    ]
+                }
+            />
             {
                 posts.length === 0 ?
                  <h1 style={{textAlign: 'center'}}>Посты не найдены</h1>
