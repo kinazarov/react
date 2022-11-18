@@ -1,8 +1,9 @@
-import { useState } from 'react';
+import { useMemo, useState } from 'react';
 import MusicList from './MusicList'
 import PostList from '../components/UI/PostList/PostList'
 import PostForm from '../components/UI/PostForm/PostForm';
 import MySelect from '../components/UI/MySelect/MySelect';
+import MyInput from './UI/MyInput/MyInput';
 
 function App() {
     const testPosts = [
@@ -13,6 +14,7 @@ function App() {
 
     const [posts, setPosts] = useState(testPosts)
     const [selectedSort, setSelectedSort] = useState('')
+    const [searchQuery, setSearchQuery] = useState('')
 
 
     const addNewPost = (newPost) => {
@@ -26,6 +28,8 @@ function App() {
     }
 
     const sortPosts = (sortType, newPosts) => {
+
+        console.log("◩◩◩◩◩◩ 1111", 1111);
         setSelectedSort(sortType)
         let sortFunc = null;
 
@@ -63,6 +67,12 @@ function App() {
                     ]
                 }
             />
+            <MyInput
+                placeholder="Поиск"
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+            />
+
             {
                 posts.length === 0 ?
                  <h1 style={{textAlign: 'center'}}>Посты не найдены</h1>
